@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Form Validation</title>
+    <script>
+        function validateForm() {
+            var name = document.forms["myForm"]["name"].value;
+            var email = document.forms["myForm"]["email"].value;
+            var message = "";
+
+            // Regular expression to check if name contains only letters and spaces
+            var nameRegex = /^[A-Za-z\s]+$/;
+
+            // Validate name: check if it's empty or contains only spaces
+            if (name.trim() === "") {
+                message += "Name must be filled out.\n";
+            } else if (!nameRegex.test(name) || name.trim().length === 0) {
+                message += "Name can only contain letters and spaces, and cannot be just
+spaces.\n";
+            }
+
+            // Validate email: check if it's empty or in the wrong format
+            if (email == "") {
+                message += "Email must be filled out.\n";
+            } else if (!email.includes("@")) {
+                message += "Invalid email format.\n";
+            }
+
+            // If there are any error messages, alert them and prevent form submission
+            if (message != "") {
+                alert(message);
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
+</head>
+<body>
+<form name="myForm" onsubmit="return validateForm()">
+    Name: <input type="text" name="name"><br><br>
+    Email: <input type="text" name="email"><br><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
