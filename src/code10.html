@@ -1,0 +1,43 @@
+<?php
+// Database connection settings
+$servername = "localhost";
+$username = "root"; // Default username for XAMPP
+$password = "";     // Default password is empty in XAMPP
+$dbname = "test_database"; // Replace with your actual database name
+// Create a new database connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+die("Connection failed: " . $conn->connect_error);
+}
+// DELETE command: Delete a user by ID
+$userIdToDelete = 3; // Change this ID as needed
+$sqlDelete = "DELETE FROM users WHERE id = $userIdToDelete";
+if ($conn->query($sqlDelete) === TRUE) {
+echo "Record with ID $userIdToDelete deleted successfully.<br>";
+} else {
+echo "Error deleting record: " . $conn->error;
+}
+// ORDER BY command: Retrieve all users ordered by age in descending order
+$sqlOrderBy = "SELECT * FROM users ORDER BY age DESC";
+$result = $conn->query($sqlOrderBy);
+if ($result->num_rows > 0) {
+echo "<h3>Users ordered by age (descending):</h3>";
+while ($row = $result->fetch_assoc()) {
+echo "ID: " . $row["id"] . " - Name: " . $row["name"] . " - Age: " . $row["age"] . "<br>";
+}
+} else {
+echo "No users found.<br>";
+}
+// UPDATE command: Update the email of a user with a specific ID
+$userIdToUpdate = 2; // Change this ID as needed
+$newEmail = "updatedemail@example.com";
+$sqlUpdate = "UPDATE users SET email = '$newEmail' WHERE id = $userIdToUpdate";
+if ($conn->query($sqlUpdate) === TRUE) {
+echo "Record with ID $userIdToUpdate updated successfully.<br>";
+} else {
+echo "Error updating record: " . $conn->error;
+}
+// Close the connection
+$conn->close();
+?>
